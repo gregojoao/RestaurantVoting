@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Voting.Domain.Entities;
@@ -33,7 +33,7 @@ namespace Voting.Domain.Tests.Queries
         {
             var winnerRestaurants = _winnerRestaurants
                 .Where(WinnerRestaurantQueries.TodaysWinner(_idRestaurantVoting));
-            Assert.AreEqual(1, winnerRestaurants.Count());
+            Assert.That(winnerRestaurants.Count(), Is.EqualTo(1));
         }
     }
 }

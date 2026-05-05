@@ -32,7 +32,7 @@ namespace Voting.Domain.Tests.Queries
         public void DadoUmaQueryParaTrazerTodosOsVotosDeHojeORetornoDeveSerDeDoisVotos()
         {
             var votes = _votes.Where(VoteQueries.TodaysVotes());
-            Assert.AreEqual(2, votes.Count());
+            Assert.That(votes.Count(), Is.EqualTo(2));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Voting.Domain.Tests.Queries
             var hungryProfessionalAlreadyVoted = _votes
                 .Where(VoteQueries.HungryProfessionalHasVotesInTheVote("", Guid.NewGuid()))
                 .Any();
-            Assert.IsFalse(hungryProfessionalAlreadyVoted);
+            Assert.That(hungryProfessionalAlreadyVoted, Is.False);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Voting.Domain.Tests.Queries
                 .Where(VoteQueries.HungryProfessionalHasVotesInTheVote(_hungryProfessionalCode01.Number,
                     _idRestaurantVoting))
                 .Any();
-            Assert.True(hungryProfessionalAlreadyVoted);
+            Assert.That(hungryProfessionalAlreadyVoted, Is.True);
         }
     }
 }

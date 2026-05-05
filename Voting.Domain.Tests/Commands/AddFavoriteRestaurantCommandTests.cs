@@ -1,4 +1,4 @@
-﻿using Voting.Domain.Commands;
+using Voting.Domain.Commands;
 using NUnit.Framework;
 
 namespace Voting.Domain.Tests.Commands
@@ -13,7 +13,7 @@ namespace Voting.Domain.Tests.Commands
         {
             _addFavoriteRestaurantToVoteCommandInvalid = new AddFavoriteRestaurantCommand();
 
-            const string favoriteRestauranteName = "Bistrô";
+            const string favoriteRestauranteName = "Bistr�";
             _addFavoriteRestaurantToVoteCommandValid = new AddFavoriteRestaurantCommand(favoriteRestauranteName);
         }
 
@@ -22,7 +22,7 @@ namespace Voting.Domain.Tests.Commands
         public void DadoUmComandoInvalidoORetornoDeveSerInvalido()
         {
             _addFavoriteRestaurantToVoteCommandInvalid.Validate();
-            Assert.False(_addFavoriteRestaurantToVoteCommandInvalid.Valid);
+            Assert.That(_addFavoriteRestaurantToVoteCommandInvalid.IsValid, Is.False);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Voting.Domain.Tests.Commands
         public void DadoUmComandoValidoORetornoDeveSerValido()
         {
             _addFavoriteRestaurantToVoteCommandValid.Validate();
-            Assert.True(_addFavoriteRestaurantToVoteCommandValid.Valid);
+            Assert.That(_addFavoriteRestaurantToVoteCommandValid.IsValid, Is.True);
         }
     }
 }

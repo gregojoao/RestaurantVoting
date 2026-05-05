@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Voting.Domain.Commands;
 using Voting.Domain.Handlers;
 using Voting.Domain.Infra.Repositories.Contracts;
@@ -16,7 +16,7 @@ namespace Voting.Domain.Tests.Handlers
         private CreateHungryProfessionalHandler _handler;
         private const string HungryProfessionalNameValid = "John";
         private const string HungryProfessionalPasswordValid = "123!@#";
-        private const string HungryProfessionalNameAlreadyRegisteredValid = "João";
+        private const string HungryProfessionalNameAlreadyRegisteredValid = "Jo�o";
         private CommandResult _commandResult;
 
         [SetUp]
@@ -37,7 +37,7 @@ namespace Voting.Domain.Tests.Handlers
         public async Task DadoUmAddHungryProfessionalComComandoInvalidoOProfissionalNaoDeveSerCadastrado()
         {
             _commandResult = (CommandResult) await _handler.Handle(_addHungryProfessionalCommandInvalid);
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Voting.Domain.Tests.Handlers
                 new AddHungryProfessionalCommand(HungryProfessionalNameAlreadyRegisteredValid,
                     HungryProfessionalPasswordValid);
             _commandResult = (CommandResult) await _handler.Handle(_addHungryProfessionalCommandValid);
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Voting.Domain.Tests.Handlers
         public async Task DadoUmAddHungryProfessionalValidoOProfissionalDeveSerCadastrado()
         {
             _commandResult = (CommandResult) await _handler.Handle(_addHungryProfessionalCommandValid);
-            Assert.AreEqual(true, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(true));
         }
     }
 }

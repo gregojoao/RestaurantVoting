@@ -10,7 +10,7 @@ using Voting.Domain.Infra.Repositories.Contracts;
 
 namespace Voting.Domain.Handlers
 {
-    public class CreateHungryProfessionalHandler : Notifiable,
+    public class CreateHungryProfessionalHandler : Notifiable<Notification>,
         IHandler<AddHungryProfessionalCommand>
     {
         public CreateHungryProfessionalHandler(IHungryProfessionalRepository hungryProfessionalRepository, IUnitOfWork unitOfWork)
@@ -25,7 +25,7 @@ namespace Voting.Domain.Handlers
         public async Task<ICommandResult> Handle(AddHungryProfessionalCommand addHungryProfessionalCommand)
         {
             addHungryProfessionalCommand.Validate();
-            if (addHungryProfessionalCommand.Invalid)
+            if (!addHungryProfessionalCommand.IsValid)
                 return new CommandResult(false, "Profissional faminto Inválido",
                     addHungryProfessionalCommand.Notifications);
             

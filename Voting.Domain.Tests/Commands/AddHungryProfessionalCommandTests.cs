@@ -1,4 +1,4 @@
-﻿using Voting.Domain.Commands;
+using Voting.Domain.Commands;
 using NUnit.Framework;
 
 namespace Voting.Domain.Tests.Commands
@@ -13,7 +13,7 @@ namespace Voting.Domain.Tests.Commands
         {
             _addHungryProfessionalCommandInvalid = new AddHungryProfessionalCommand();
 
-            const string hungryProfessionalName = "João";
+            const string hungryProfessionalName = "Jo�o";
             const string hungryProfessionalPassword = "123!@#";
             _addHungryProfessionalCommandValid =
                 new AddHungryProfessionalCommand(hungryProfessionalName, hungryProfessionalPassword);
@@ -24,7 +24,7 @@ namespace Voting.Domain.Tests.Commands
         public void DadoUmComandoInvalidoORetornoDeveSerInvalido()
         {
             _addHungryProfessionalCommandInvalid.Validate();
-            Assert.False(_addHungryProfessionalCommandInvalid.Valid);
+            Assert.That(_addHungryProfessionalCommandInvalid.IsValid, Is.False);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Voting.Domain.Tests.Commands
         public void DadoUmComandoValidoORetornoDeveSerValido()
         {
             _addHungryProfessionalCommandValid.Validate();
-            Assert.True(_addHungryProfessionalCommandValid.Valid);
+            Assert.That(_addHungryProfessionalCommandValid.IsValid, Is.True);
         }
     }
 }

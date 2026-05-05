@@ -4,9 +4,12 @@ using Flunt.Validations;
 
 namespace Voting.Domain.Commands
 {
-    public class AddFavoriteRestaurantCommand : Notifiable, ICommand
+    public class AddFavoriteRestaurantCommand : Notifiable<Notification>, ICommand
     {
-        public AddFavoriteRestaurantCommand() { }
+        public AddFavoriteRestaurantCommand()
+        {
+            FavoriteRestaurantName = string.Empty;
+        }
 
         public AddFavoriteRestaurantCommand(string favoriteRestaurantName)
         {
@@ -18,9 +21,11 @@ namespace Voting.Domain.Commands
         public void Validate()
         {
             AddNotifications(
-                new Contract()
+                new Contract<Notification>()
                     .Requires()
-                    .HasMinLen(FavoriteRestaurantName, 2, "FavoriteRestaurantName",
+                    .IsNotNullOrEmpty(FavoriteRestaurantName, "FavoriteRestaurantName",
+                        "Nome do restaurante não pode ser vazio.")
+                    .IsGreaterOrEqualsThan(FavoriteRestaurantName, 2, "FavoriteRestaurantName",
                         "Nome do restaurante deve conter pelo menos 2 caracteres."));
         }
     }

@@ -9,7 +9,7 @@ using Flunt.Notifications;
 
 namespace Voting.Domain.Handlers
 {
-    public class RestaurantVotingHandler : Notifiable,
+    public class RestaurantVotingHandler : Notifiable<Notification>,
         IHandler<VoteInMyFavoriteRestaurantCommand>
     {
         private readonly IRestaurantVotingService _restaurantVoting;
@@ -31,11 +31,11 @@ namespace Voting.Domain.Handlers
         public async Task<ICommandResult> Handle(VoteInMyFavoriteRestaurantCommand voteInMyFavoriteRestaurantCommand)
         {
             voteInMyFavoriteRestaurantCommand.Validate();
-            if (voteInMyFavoriteRestaurantCommand.Invalid)
+            if (!voteInMyFavoriteRestaurantCommand.IsValid)
                 return new CommandResult(false, "Voto Inválido.", voteInMyFavoriteRestaurantCommand.Notifications);
 
             if (!await _restaurantVoting.IsHappening())
-                return new CommandResult(false, "Votação Encerrada.", null);
+                return new CommandResult(false, "Votação Encerrada.", "A votação não está acontecendo no momento.");
 
             var hungryProfessional =
                 await _hungryProfessionalRepository.Get(voteInMyFavoriteRestaurantCommand.HungryProfessionalCode);
@@ -51,16 +51,16 @@ namespace Voting.Domain.Handlers
             if (favoriteRestaurant == null)
                 AddNotification(new Notification("FavoriteRestaurantCode", "Restaurante favorito não cadastrado."));
             if (favoriteRestaurant != null)
-                if (!await _restaurantVoting.CanTheRestaurantBeVoted(favoriteRestaurant?.Code))
+                if (!await _restaurantVoting.CanTheRestaurantBeVoted(favoriteRestaurant.Code))
                     AddNotification(new Notification("FavoriteRestaurantCode",
                         "Você não pode votar em um Restaurante que já foi escolhido essa semana."));
 
-            if (Invalid)
+            if (!IsValid)
                 return new CommandResult(false, "Voto Inválido.", Notifications);
 
             try
             {
-                await _restaurantVoting.Vote(hungryProfessional?.Code, favoriteRestaurant?.Code);
+                await _restaurantVoting.Vote(hungryProfessional!.Code, favoriteRestaurant!.Code);
                 await _unitOfWork.Commit();
             }
             catch (Exception ex)
