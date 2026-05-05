@@ -1,4 +1,4 @@
-ï»¿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Voting.Domain.Commands;
 using Voting.Domain.Handlers;
 using Voting.Domain.Infra.Repositories.Contracts;
@@ -14,8 +14,8 @@ namespace Voting.Domain.Tests.Handlers
         private AddFavoriteRestaurantCommand _addFavoriteRestaurantCommandInvalid;
         private AddFavoriteRestaurantCommand _addFavoriteRestaurantCommandValid;
         private CreateFavoriteRestaurantHandler _handler;
-        private const string FavoriteRestaurantNameValid = "BistrÃ´";
-        private const string FavoriteRestaurantNameAlreadyRegisteredValid = "TrÃ´bis";
+        private const string FavoriteRestaurantNameValid = "Bistrô";
+        private const string FavoriteRestaurantNameAlreadyRegisteredValid = "Trôbis";
         private CommandResult _commandResult;
 
         [SetUp]
@@ -35,7 +35,7 @@ namespace Voting.Domain.Tests.Handlers
         public async Task DadoUmAddFavoriteRestaurantComComandoInvalidoORestauranteNaoDeveSerCadastrado()
         {
             _commandResult = (CommandResult) await _handler.Handle(_addFavoriteRestaurantCommandInvalid);
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Voting.Domain.Tests.Handlers
         {
             _addFavoriteRestaurantCommandValid = new AddFavoriteRestaurantCommand(FavoriteRestaurantNameAlreadyRegisteredValid);
             _commandResult = (CommandResult) await _handler.Handle(_addFavoriteRestaurantCommandValid);
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Voting.Domain.Tests.Handlers
         public async Task DadoUmAddFavoriteRestaurantValidoORestauranteDeveSerCadastrado()
         {
             _commandResult = (CommandResult) await _handler.Handle(_addFavoriteRestaurantCommandValid);
-            Assert.AreEqual(true, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(true));
         }
     }
 }

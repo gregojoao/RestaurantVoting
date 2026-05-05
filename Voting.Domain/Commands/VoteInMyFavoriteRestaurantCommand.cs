@@ -4,9 +4,13 @@ using Flunt.Validations;
 
 namespace Voting.Domain.Commands
 {
-    public class VoteInMyFavoriteRestaurantCommand : Notifiable, ICommand
+    public class VoteInMyFavoriteRestaurantCommand : Notifiable<Notification>, ICommand
     {
-        public VoteInMyFavoriteRestaurantCommand() { }
+        public VoteInMyFavoriteRestaurantCommand()
+        {
+            HungryProfessionalCode = string.Empty;
+            FavoriteRestaurantCode = string.Empty;
+        }
 
         public VoteInMyFavoriteRestaurantCommand(string hungryProfessionalCode, string favoriteRestaurantCode)
         {
@@ -20,11 +24,15 @@ namespace Voting.Domain.Commands
         public void Validate()
         {
             AddNotifications(
-                new Contract()
+                new Contract<Notification>()
                     .Requires()
-                    .HasMinLen(HungryProfessionalCode, 6, "HungryProfessionalCode",
+                    .IsNotNullOrEmpty(HungryProfessionalCode, "HungryProfessionalCode",
+                        "Código do profissional não pode ser vazio.")
+                    .IsGreaterOrEqualsThan(HungryProfessionalCode, 6, "HungryProfessionalCode",
                         "Código deve conter pelo menos 6 caracteres.")
-                    .HasMinLen(FavoriteRestaurantCode, 4, "FavoriteRestaurantCode",
+                    .IsNotNullOrEmpty(FavoriteRestaurantCode, "FavoriteRestaurantCode",
+                        "Código do restaurante não pode ser vazio.")
+                    .IsGreaterOrEqualsThan(FavoriteRestaurantCode, 4, "FavoriteRestaurantCode",
                         "Código deve conter pelo menos 4 caracteres."));
         }
     }

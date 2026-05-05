@@ -58,7 +58,7 @@ namespace Voting.Domain.Tests.Handlers
             _restaurantVoting = RestaurantVotingWithOneMinuteAvailable();
             _handler = HandlerConfigured();
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandInvalid);
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Voting.Domain.Tests.Handlers
             _restaurantVoting = RestaurantVotingNoTimeAvailable();
             _handler = HandlerConfigured();
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Voting.Domain.Tests.Handlers
             _voteInMyFavoriteRestaurantCommandValid =
                 new VoteInMyFavoriteRestaurantCommand(_hungryProfessionalCodeInvalid, FavoriteRestaurantCodeValid);
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace Voting.Domain.Tests.Handlers
                 new VoteInMyFavoriteRestaurantCommand("999999", FavoriteRestaurantCodeValid);
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
 
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Voting.Domain.Tests.Handlers
             _voteInMyFavoriteRestaurantCommandValid =
                 new VoteInMyFavoriteRestaurantCommand(HungryProfessionalCodeValid, _favoriteRestaurantCodeInvalid);
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Voting.Domain.Tests.Handlers
             _voteInMyFavoriteRestaurantCommandValid =
                 new VoteInMyFavoriteRestaurantCommand(HungryProfessionalCodeValid, favoriteRestaurantCode.Number);
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
-            Assert.AreEqual(false, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(false));
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace Voting.Domain.Tests.Handlers
 
             _handler = HandlerConfigured();
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
-            Assert.AreEqual(true, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(true));
         }
         
         [Test]
@@ -156,7 +156,7 @@ namespace Voting.Domain.Tests.Handlers
 
             _handler = HandlerConfigured();
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
-            Assert.AreEqual(true, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(true));
         }
         
         [Test]
@@ -173,7 +173,7 @@ namespace Voting.Domain.Tests.Handlers
 
             _handler = HandlerConfigured();
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
-            Assert.AreEqual(true, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(true));
         }
         
         [Test]
@@ -191,7 +191,7 @@ namespace Voting.Domain.Tests.Handlers
 
             _handler = HandlerConfigured();
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
-            Assert.AreEqual(true, _commandResult.Sucess);
+            Assert.That(_commandResult.Sucess, Is.EqualTo(true));
         }
         
         private RestaurantVoting RestaurantVotingNoTimeAvailable()

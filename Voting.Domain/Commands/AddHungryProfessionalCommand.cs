@@ -4,9 +4,13 @@ using Voting.Domain.Commands.Contracts;
 
 namespace Voting.Domain.Commands
 {
-    public class AddHungryProfessionalCommand : Notifiable, ICommand
+    public class AddHungryProfessionalCommand : Notifiable<Notification>, ICommand
     {
-        public AddHungryProfessionalCommand() { }
+        public AddHungryProfessionalCommand()
+        {
+            HungryProfessionalName = string.Empty;
+            HungryProfessionalPassword = string.Empty;
+        }
         
         public AddHungryProfessionalCommand(string hungryProfessionalName, string hungryProfessionalPassword)
         {
@@ -20,11 +24,15 @@ namespace Voting.Domain.Commands
         public void Validate()
         {
             AddNotifications(
-                new Contract()
+                new Contract<Notification>()
                     .Requires()
-                    .HasMinLen(HungryProfessionalName, 2, "HungryProfessionalName",
+                    .IsNotNullOrEmpty(HungryProfessionalName, "HungryProfessionalName",
+                        "Nome do profissional não pode ser vazio.")
+                    .IsGreaterOrEqualsThan(HungryProfessionalName, 2, "HungryProfessionalName",
                         "Nome do profissional deve conter pelo menos 2 caracteres.")
-                    .HasMinLen(HungryProfessionalPassword, 6, "HungryProfessionalPassword",
+                    .IsNotNullOrEmpty(HungryProfessionalPassword, "HungryProfessionalPassword",
+                        "Senha do profissional não pode ser vazia.")
+                    .IsGreaterOrEqualsThan(HungryProfessionalPassword, 6, "HungryProfessionalPassword",
                         "Senha do profissional deve conter pelo menos 6 caracteres."));
         }
     }

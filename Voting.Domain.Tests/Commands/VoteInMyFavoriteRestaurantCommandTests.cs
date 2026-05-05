@@ -23,7 +23,7 @@ namespace Voting.Domain.Tests.Commands
         public void DadoUmComandoInvalidoORetornoDeveSerInvalido()
         {
             _voteInMyFavoriteRestaurantCommandInvalid.Validate();
-            Assert.False(_voteInMyFavoriteRestaurantCommandInvalid.Valid);
+            Assert.That(_voteInMyFavoriteRestaurantCommandInvalid.IsValid, Is.False);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace Voting.Domain.Tests.Commands
         public void DadoUmComandoValidoORetornoDeveSerValido()
         {
             _voteInMyFavoriteRestaurantCommandValid.Validate();
-            Assert.True(_voteInMyFavoriteRestaurantCommandValid.Valid);
+            Assert.That(_voteInMyFavoriteRestaurantCommandValid.IsValid, Is.True);
         }
     }
 }

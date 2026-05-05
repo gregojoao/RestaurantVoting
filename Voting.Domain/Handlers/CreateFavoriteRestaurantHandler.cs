@@ -10,7 +10,7 @@ using Flunt.Notifications;
 
 namespace Voting.Domain.Handlers
 {
-    public class CreateFavoriteRestaurantHandler : Notifiable,
+    public class CreateFavoriteRestaurantHandler : Notifiable<Notification>,
         IHandler<AddFavoriteRestaurantCommand>
     {
         private readonly IFavoriteRestaurantRepository _favoriteRestaurantRepository;
@@ -26,7 +26,7 @@ namespace Voting.Domain.Handlers
         public async Task<ICommandResult> Handle(AddFavoriteRestaurantCommand addFavoriteRestaurantCommand)
         {
             addFavoriteRestaurantCommand.Validate();
-            if (addFavoriteRestaurantCommand.Invalid)
+            if (!addFavoriteRestaurantCommand.IsValid)
                 return new CommandResult(false, "Restaurante favorito Inválido",
                     addFavoriteRestaurantCommand.Notifications);
 
